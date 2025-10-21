@@ -1,0 +1,19 @@
+              precision    recall  f1-score   support
+
+      güncel       0.62      0.61      0.61      1169
+       genel       0.43      0.20      0.28      1334
+        spor       0.92      0.96      0.94      2000
+     siyaset       0.47      0.65      0.55       370
+     magazin       0.69      0.83      0.75       558
+       dünya       0.55      0.77      0.64       745
+      sağlık       0.79      0.83      0.81       277
+       yaşam       0.00      0.00      0.00       129
+     türkiye       0.55      0.56      0.55       388
+      planet       0.45      0.30      0.36       391
+   teknoloji       0.67      0.77      0.72       154
+kültür-sanat       0.67      0.72      0.69       231
+     ekonomi       0.58      0.83      0.68       653
+
+    accuracy                           0.66      8399
+   macro avg       0.57      0.62      0.58      8399
+weighted avg       0.64      0.66      0.64      8399

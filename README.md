@@ -1,57 +1,87 @@
-# 📰 Turkish News Category Classifier
+# Turkish News Classification Project
 
-A baseline **Turkish news classification model** built using **TF-IDF** features and **Logistic Regression**.  
-This project aims to classify news articles into multiple categories such as *spor, ekonomi, magazin, siyaset, teknoloji*, and more.
+This project provides two different models for classifying Turkish news articles into various categories such as sports, politics, economy, and more. It includes a classic machine learning baseline and a modern deep learning approach using a Transformer-based model.
 
----
+## Models
 
-## 🚀 Project Overview
+This repository contains two distinct models, each in its own directory.
 
-This project demonstrates the end-to-end process of **text classification in Turkish**:
+### 1. `v1_baseline`: TF-IDF + Logistic Regression
 
-1. **Data Preprocessing**  
-   - Combined `headline` and `content` fields  
-   - Cleaned punctuation, links, and stopwords  
-   - Split data into `train.csv` and `test.csv`  
+This model serves as a simple and fast baseline for the text classification task.
 
-2. **Feature Extraction (TF-IDF)**  
-   - Used up to **10,000 features**  
-   - Included **1-3 word n-grams**  
-   - Filtered rare & common terms (`min_df=3`, `max_df=0.9`)  
+-   **Architecture**: It uses a **TF-IDF (Term Frequency-Inverse Document Frequency)** vectorizer to convert text into numerical features and a **Logistic Regression** classifier to perform the classification.
+-   **Technology**: Built with `scikit-learn`, `pandas`, and `nltk`.
+-   **Performance**: This model provides a solid starting point. It performs very well for distinct categories like "spor" (sports) but struggles with more nuanced or overlapping categories.
+-   **Details**: You can find the training script, saved model, and dependencies in the `v1_baseline/` directory.
 
-3. **Model Training**  
-   - **Logistic Regression** with `class_weight='balanced'`  
-   - Increased `max_iter` to ensure convergence  
+### 2. `v2_bert`: Fine-Tuned BERT Model
 
-4. **Evaluation**  
-   - Evaluated using `accuracy`, `F1-score`, and `confusion matrix`
+This is a more advanced model that leverages a pre-trained BERT model for higher accuracy and better semantic understanding.
 
----
+-   **Architecture**: It uses the `dbmdz/bert-base-turkish-cased` model, a BERT model pre-trained on a large corpus of Turkish text. The model is then **fine-tuned** on the specific news classification dataset.
+-   **Technology**: Built with `Hugging Face Transformers`, `PyTorch`, and `datasets`.
+-   **Performance**: This model is expected to significantly outperform the baseline, as it can understand the context and semantics of the news text more effectively.
+-   **Details**: The `v2_bert/` directory contains everything needed to train the model, run predictions, and manage dependencies.
 
-## 📊 Results (v1.0 – Baseline Model)
+## Project Structure
 
-| Metric | Score |
-|--------|-------|
-| **Accuracy** | 0.57 |
-| **Macro F1** | 0.51 |
-| **Weighted F1** | 0.55 |
+```
+.
+├── v1_baseline/
+│   ├── train_baseline.py   # Script to train the TF-IDF + Logistic Regression model
+│   ├── model/              # Saved baseline model
+│   └── requirements.txt    # Dependencies for the baseline model
+│
+└── v2_bert/
+    ├── train_bert_finetune.py  # Script to fine-tune the BERT model
+    ├── predict_news.py         # Script to classify news with the BERT model
+    ├── model/                  # Saved fine-tuned BERT model
+    └── requirements.txt        # Dependencies for the BERT model
+```
 
-### 🔹 Class-wise Performance Highlights
-| Category | F1-score | Comment |
-|-----------|-----------|----------|
-| **spor** | 0.91 | Excellent separation |
-| **magazin** | 0.67 | Strong |
-| **sağlık** | 0.65 | Good generalization |
-| **teknoloji** | 0.62 | Clear improvement after tuning |
-| **genel / yaşam** | <0.20 | Semantically overlapping, needs embedding-based model |
+## How to Use
 
----
+First, clone the repository to your local machine.
 
-## 🧠 Confusion Matrix Example
-Below is the confusion matrix visualization generated with Seaborn:
+### Running the Baseline Model (v1)
 
-```python
-plt.figure(figsize=(10,8))
-sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
-plt.show()
+1.  **Navigate to the baseline directory:**
+    ```bash
+    cd v1_baseline
+    ```
 
+2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Run the training script:**
+    ```bash
+    python train_baseline.py
+    ```
+    This will train the model and save the `baseline_model.pkl` and `vectorizer.pkl` inside the `v1_baseline/model/` directory.
+
+### Running the BERT Model (v2)
+
+1.  **Navigate to the BERT directory:**
+    ```bash
+    cd v2_bert
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Run the training script:**
+    ```bash
+    python train_bert_finetune.py
+    ```
+    This will fine-tune the BERT model and save the best version to the `v2_bert/model/fine_tuned_bert/` directory.
+
+4.  **Make predictions:**
+    To classify new text, run the interactive prediction script:
+    ```bash
+    python predict_news.py
+    ```
